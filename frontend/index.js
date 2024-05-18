@@ -73,6 +73,7 @@ function moduleProject2() {
          let goDown = evt.key === keys.down
          let goLeft = evt.key === keys.left
          let goRight = evt.key === keys.right
+         let pressSpaceBar = evt.key === keys.space
 
          let targeted = document.querySelector('.targeted')
 
@@ -99,10 +100,29 @@ function moduleProject2() {
             targeted.nextElementSibling.classList.add('targeted')
           }
          }
-         
-    // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
 
-    // 👉 TASK 5 - End the game 👈
+    // 👉 TASK 4 - Use the space bar to exterminate a mosquito 👈
+         else if (pressSpaceBar) {
+          let mosquito = targeted.firstChild
+          if (mosquito && mosquito.dataset.status === 'alive') {
+            mosquito.dataset.status = 'dead'
+            mosquito.parentElement.style.backgroundColor = 'red'
+          }
+          // 👉 TASK 5 - End the game 👈
+          let mosquitoesAlive = document.querySelectorAll('[Data-status=alive]')
+          if (!mosquitoesAlive.length) {
+            let elapsed = getTimeElapsed()
+            document.querySelector('p.info').textContent =
+            `Extermination completed in ${elapsed / 1000} seconds!`
+
+            let restartBtn = document.createElement('button')
+            restartBtn.textContent = 'Restart'
+            restartBtn.addEventListener('click', () => {
+              location.reload()
+            })
+            document.querySelector('h2').insertAjacentElement('beforeend', restartBtn)
+          }
+         }
   })
   // 👆 WORK WORK ABOVE THIS LINE 👆
 }
